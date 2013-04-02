@@ -1,6 +1,3 @@
-Python CLI setup
-================
-
 INSTALL
 -------
 
