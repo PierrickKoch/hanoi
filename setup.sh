@@ -82,8 +82,7 @@ ${workspace}/bin/python3.3 distribute_setup.py
 echo "[ -f /opt/ros/groovy/setup.bash ] && source /opt/ros/groovy/setup.bash" >> ${workspace}/.bashrc
 echo "[ -f ${workspace}/.bashrc ] && source ${workspace}/.bashrc" >> ~/.bashrc
 
-echo "Wait for previous install"
-for job in $(jobs -p); do wait $job; done
+echo "Wait for previous install"; wait
 
 ubuntu_codename=$(lsb_release -cs)
 [ "0" != "$?" ] && echo "[ERROR] lsb_release: not running Ubuntu ?" && exit 1
