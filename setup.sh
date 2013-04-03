@@ -78,7 +78,7 @@ tar zxf PyYAML-3.10.tar.gz && cd PyYAML-3.10;
 wait $pypid && ${workspace}/bin/python3.3 setup.py install) &
 
 echo "Install distribute w/ python3.3"
-wget -cq http://python-distribute.org/distribute_setup.py;
+wget -cq http://python-distribute.org/distribute_setup.py
 
 echo "Wait for Python 3.3 install"
 wait $pypid

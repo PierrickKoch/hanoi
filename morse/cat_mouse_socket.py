@@ -15,10 +15,10 @@ cat.append(camera)
 
 pose = Pose()
 cat.append(pose)
-pose.add_stream('ros')
+pose.add_stream('socket')
 
-motion.add_stream('ros')
-camera.add_stream('ros')
+motion.add_stream('socket')
+camera.add_stream('socket')
 
 #
 # "mouse" robot
@@ -33,7 +33,7 @@ mouse.append(keyboard)
 
 pose = Pose()
 mouse.append(pose)
-pose.add_stream('ros')
+pose.add_stream('socket')
 
 #
 # Environment
