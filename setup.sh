@@ -7,6 +7,8 @@
 
 workspace=$(pwd)
 
+[ "$workspace" = "$HOME" ] && echo "Create a new directory and run this script in it." && exit 1
+
 echo -n "Install in ${workspace} ? [y/N] "
 read ok
 [ "y" != "$ok" ] && exit 1
@@ -15,7 +17,7 @@ mkdir -p ${workspace}/opt ${workspace}/tmp ${workspace}/src
 cd ${workspace}/tmp
 
 echo "Install Python 3.3"
-(wget -q http://python.org/ftp/python/3.3.0/Python-3.3.0.tar.bz2;
+(wget -cq http://python.org/ftp/python/3.3.0/Python-3.3.0.tar.bz2;
 tar jxf Python-3.3.0.tar.bz2 && cd Python-3.3.0;
 ./configure prefix=${workspace} && make install) & pypid=$!
 
@@ -23,11 +25,11 @@ tar jxf Python-3.3.0.tar.bz2 && cd Python-3.3.0;
 
 BLENDER="blender-2.65a-linux-glibc211-$arch"
 echo "Install ${BLENDER}"
-(wget -q http://download.blender.org/release/Blender2.65/${BLENDER}.tar.bz2;
+(wget -cq http://download.blender.org/release/Blender2.65/${BLENDER}.tar.bz2;
 tar jxf ${BLENDER}.tar.bz2 && mv ${BLENDER} ${workspace}/opt/blender) &
 
 echo "Install MORSE 1.0 tarball"
-(wget -q https://github.com/laas/morse/archive/1.0_STABLE.tar.gz -O morse.tgz;
+(wget -cq https://github.com/laas/morse/archive/1.0_STABLE.tar.gz -O morse.tgz;
 tar zxf morse.tgz && mv morse-1.0_STABLE ${workspace}/src/morse && wait $pypid && \
 cd ${workspace}/src/morse && mkdir -p build && cd build && \
 cmake -DCMAKE_INSTALL_PREFIX=${workspace} -DPYMORSE_SUPPORT=ON \
@@ -71,12 +73,12 @@ EOF
 #
 
 echo "Install Python YAML w/ python3.3"
-(wget -q http://pyyaml.org/download/pyyaml/PyYAML-3.10.tar.gz;
+(wget -cq http://pyyaml.org/download/pyyaml/PyYAML-3.10.tar.gz;
 tar zxf PyYAML-3.10.tar.gz && cd PyYAML-3.10;
 wait $pypid && ${workspace}/bin/python3.3 setup.py install) &
 
 echo "Install distribute w/ python3.3"
-wget -q http://python-distribute.org/distribute_setup.py;
+wget -cq http://python-distribute.org/distribute_setup.py;
 
 echo "Wait for Python 3.3 install"
 wait $pypid
