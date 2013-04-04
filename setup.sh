@@ -66,6 +66,8 @@ alias blender=${workspace}/opt/blender/blender
 # Python
 export PATH=\$PATH:${workspace}/bin
 export PYTHONPATH=\$PYTHONPATH:${workspace}/lib/python3.3/dist-packages
+# Colorize MORSE :-)
+alias morse="morse -c"
 EOF
 
 #
