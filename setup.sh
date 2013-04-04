@@ -70,6 +70,8 @@ export PYTHONPATH=\$PYTHONPATH:${workspace}/lib/python3.3/dist-packages
 alias morse="morse -c"
 EOF
 
+echo "[ -f ${workspace}/.bashrc ] && source ${workspace}/.bashrc" >> ~/.bashrc
+
 #
 # ROS specific
 #
@@ -87,9 +89,6 @@ wait $pypid
 
 ${workspace}/bin/python3.3 distribute_setup.py
 
-echo "[ -f /opt/ros/groovy/setup.bash ] && source /opt/ros/groovy/setup.bash" >> ${workspace}/.bashrc
-echo "[ -f ${workspace}/.bashrc ] && source ${workspace}/.bashrc" >> ~/.bashrc
-
 echo "Wait for background install to finish"
 wait
 
@@ -104,6 +103,8 @@ sudo apt-get install ros-groovy-desktop-full python-rosinstall git-svn git-cvs
 
 sudo rosdep init
 rosdep update
+
+echo "[ -f /opt/ros/groovy/setup.bash ] && source /opt/ros/groovy/setup.bash" >> ${workspace}/.bashrc
 
 echo "Install rospkg w/ python3.3"
 cd ${workspace}/tmp && git clone git://github.com/ros/rospkg.git
