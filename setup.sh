@@ -26,7 +26,8 @@ tar jxf Python-3.3.0.tar.bz2 && cd Python-3.3.0;
 BLENDER="blender-2.65a-linux-glibc211-$arch"
 echo "Install ${BLENDER}"
 (wget -cq http://download.blender.org/release/Blender2.65/${BLENDER}.tar.bz2;
-tar jxf ${BLENDER}.tar.bz2 && mv ${BLENDER} ${workspace}/opt/blender) &
+tar jxf ${BLENDER}.tar.bz2 && mv ${BLENDER} ${workspace}/opt/blender;
+ln -s ../opt/blender/blender ${workspace}/bin/blender) &
 
 echo "Install MORSE 1.0 tarball"
 (wget -cq https://github.com/laas/morse/archive/af47579931f01e3a76882752c4ee161eca1c99e2.tar.gz -O morse.tgz;
@@ -99,7 +100,7 @@ echo "Install ROS on ${ubuntu_codename} in /opt needs to sudo"
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros-latest.list'
 wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install ros-groovy-desktop-full python-rosinstall git-svn git-cvs
+sudo apt-get install ros-groovy-desktop-full python-rosinstall git-cvs
 
 sudo rosdep init
 rosdep update
