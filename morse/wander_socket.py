@@ -24,11 +24,11 @@ sick.create_laser_arc()
 sick.frequency(5)
 
 # Append a Camera (for the show)
-camera = VideoCamera()
-robot.append(camera)
-camera.translate(x=.34,z=.72)
+#camera = VideoCamera()
+#robot.append(camera)
+#camera.translate(x=.34,z=.72)
 # Lower the frequency, in our demo we don't need a lot of image, free some CPU
-camera.frequency(5)
+#camera.frequency(5)
 
 # Auto-configure all robot's components for ROS
 robot.add_default_interface('socket')
