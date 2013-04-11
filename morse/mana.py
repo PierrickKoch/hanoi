@@ -8,24 +8,35 @@ class Mana(SegwayRMP400):
         self.init_components()
     def init_components(self):
         self.velodyne = Velodyne()
-        self.append(self.velodyne)
         self.velodyne.translate(z=0.80)
+        self.append(self.velodyne)
+
+        self.ptu = PTU()
+        self.ptu.translate(x=0.30, z=0.40)
+        self.append(self.ptu)
+        # TODO PTU -> cam{r,l}
 
         self.cameraL = VideoCamera()
+        self.cameraL.translate(x=0.35, y=-0.15, z=0.45)
         self.append(self.cameraL)
-        self.cameraL.translate(x=-0.15, y=0.35, z=0.45)
 
         self.cameraR = VideoCamera()
+        self.cameraR.translate(x=0.35, y=+0.15, z=0.45)
         self.append(self.cameraR)
-        self.cameraR.translate(x=+0.15, y=0.35, z=0.45)
 
         self.odometry = Odometry()
-        self.append(self.odometry)
         self.odometry.translate(z=0.25)
+        self.append(self.odometry)
 
         self.gps = GPS()
-        self.append(self.gps)
         self.gps.translate(y=-0.30, z=0.60)
+        self.append(self.gps)
+
+        # eye sugar: the top structure
+        struc = Cube("manastruct1")
+        struc.scale = (.1, .1, .1)
+        struc.translate(x=0.20, y=0.20, z=0.20)
+        #self.append(struc)
 
     def add_motion(self):
         self.motion = MotionVWDiff()
@@ -43,5 +54,5 @@ if __name__ == "__main__":
     mana = Mana()
     mana.add_keyboard()
     env = Environment("outdoors")
-    del env # finalize scene initialization
+    env.create() # finalize scene initialization
 
