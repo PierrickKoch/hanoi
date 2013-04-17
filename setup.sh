@@ -2,8 +2,11 @@
 #
 # Pierrick Koch - for morse.openrobots.org
 # one line easy install:
-#   mkdir ~/devel; cd ~/devel; sh <(wget http://pierriko.com/hanoi/setup.sh -qO-)
+#   mkdir ~/devel; cd ~/devel; wget http://pierriko.com/hanoi/setup.sh; sh setup.sh
 #
+
+# test cmake and gcc
+cmake --version && gcc --version || echo "Please install cmake and gcc" && exit $?
 
 workspace=$(pwd)
 
@@ -17,20 +20,20 @@ mkdir -p ${workspace}/opt ${workspace}/tmp ${workspace}/src
 cd ${workspace}/tmp
 
 echo "Install Python 3.3"
-(wget -cq http://python.org/ftp/python/3.3.0/Python-3.3.0.tar.bz2;
-tar jxf Python-3.3.0.tar.bz2 && cd Python-3.3.0;
+(wget -cq http://python.org/ftp/python/3.3.0/Python-3.3.0.tar.bz2 && \
+tar jxf Python-3.3.0.tar.bz2 && cd Python-3.3.0 && \
 ./configure prefix=${workspace} && make install) & pypid=$!
 
 [ -z "$(uname -p | grep 64)" ] && arch="i686" || arch="x86_64"
 
 BLENDER="blender-2.65a-linux-glibc211-$arch"
 echo "Install ${BLENDER}"
-(wget -cq http://download.blender.org/release/Blender2.65/${BLENDER}.tar.bz2;
-tar jxf ${BLENDER}.tar.bz2 && mv ${BLENDER} ${workspace}/opt/blender;
+(wget -cq http://download.blender.org/release/Blender2.65/${BLENDER}.tar.bz2 && \
+tar jxf ${BLENDER}.tar.bz2 && mv ${BLENDER} ${workspace}/opt/blender && \
 ln -s ../opt/blender/blender ${workspace}/bin/blender) &
 
 echo "Install MORSE 1.0 tarball"
-(wget -cq https://github.com/laas/morse/archive/af47579931f01e3a76882752c4ee161eca1c99e2.tar.gz -O morse.tgz;
+(wget -cq https://github.com/laas/morse/archive/af47579931f01e3a76882752c4ee161eca1c99e2.tar.gz -O morse.tgz && \
 tar zxf morse.tgz && mv morse-* ${workspace}/src/morse && wait $pypid && \
 cd ${workspace}/src/morse && mkdir -p build && cd build && \
 cmake -DCMAKE_INSTALL_PREFIX=${workspace} -DPYMORSE_SUPPORT=ON \
@@ -78,8 +81,8 @@ echo "[ -f ${workspace}/.bashrc ] && source ${workspace}/.bashrc" >> ~/.bashrc
 #
 
 echo "Install Python YAML w/ python3.3"
-(wget -cq http://pyyaml.org/download/pyyaml/PyYAML-3.10.tar.gz;
-tar zxf PyYAML-3.10.tar.gz && cd PyYAML-3.10;
+(wget -cq http://pyyaml.org/download/pyyaml/PyYAML-3.10.tar.gz && \
+tar zxf PyYAML-3.10.tar.gz && cd PyYAML-3.10 && \
 wait $pypid && ${workspace}/bin/python3.3 setup.py install) &
 
 echo "Install distribute w/ python3.3"
