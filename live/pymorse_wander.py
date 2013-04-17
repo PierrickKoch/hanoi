@@ -25,7 +25,6 @@ def wander(ranges):
         cmd['v'] = SPEED
     # command to be published
     return cmd
-import time
 
 with pymorse.Morse() as sim:
     while sim:
