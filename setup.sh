@@ -22,7 +22,7 @@ cd ${workspace}/tmp
 echo "Install Python 3.3"
 (wget -cq http://python.org/ftp/python/3.3.0/Python-3.3.0.tar.bz2 && \
 tar jxf Python-3.3.0.tar.bz2 && cd Python-3.3.0 && \
-./configure prefix=${workspace} && make install) & pypid=$!
+./configure --prefix=${workspace} --enable-shared && make install) & pypid=$!
 
 [ -z "$(uname -p | grep 64)" ] && arch="i686" || arch="x86_64"
 
@@ -70,6 +70,8 @@ alias blender=${workspace}/opt/blender/blender
 # Python
 export PATH=\$PATH:${workspace}/bin
 export PYTHONPATH=\$PYTHONPATH:${workspace}/lib/python3.3/dist-packages
+export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${workspace}/lib
+export PKG_CONFIG_PATH=${workspace}/lib/pkgconfig:\$PKG_CONFIG_PATH
 # Colorize MORSE :-)
 alias morse="morse -c"
 EOF
