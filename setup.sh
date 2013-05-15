@@ -32,15 +32,6 @@ echo "Install ${BLENDER}"
 tar jxf ${BLENDER}.tar.bz2 && mv ${BLENDER} ${workspace}/opt/blender && \
 ln -s ../opt/blender/blender ${workspace}/bin/blender) &
 
-echo "Install MORSE 1.0 tarball"
-(wget -cq https://github.com/laas/morse/archive/af47579931f01e3a76882752c4ee161eca1c99e2.tar.gz -O morse.tgz && \
-tar zxf morse.tgz && mv morse-* ${workspace}/src/morse && wait $pypid && \
-cd ${workspace}/src/morse && mkdir -p build && cd build && \
-cmake -DCMAKE_INSTALL_PREFIX=${workspace} -DPYMORSE_SUPPORT=ON \
--DPYTHON_EXECUTABLE=${workspace}/bin/python3.3 -DBUILD_ROS_SUPPORT=ON .. && \
-make install) &
-
-
 echo "Setting up Pyhton CLI completion and history"
 
 cat > ${workspace}/.pyrc << EOF
@@ -76,6 +67,17 @@ alias morse="morse -c"
 EOF
 
 echo "[ -f ${workspace}/.bashrc ] && source ${workspace}/.bashrc" >> ~/.bashrc
+
+source ${workspace}/.bashrc
+
+echo "Install MORSE 1.0 tarball"
+(wget -cq https://github.com/laas/morse/archive/af47579931f01e3a76882752c4ee161eca1c99e2.tar.gz -O morse.tgz && \
+tar zxf morse.tgz && mv morse-* ${workspace}/src/morse && wait $pypid && \
+cd ${workspace}/src/morse && mkdir -p build && cd build && \
+cmake -DCMAKE_INSTALL_PREFIX=${workspace} -DPYMORSE_SUPPORT=ON \
+-DPYTHON_EXECUTABLE=${workspace}/bin/python3.3 -DBUILD_ROS_SUPPORT=ON .. && \
+make install) &
+
 
 #
 # ROS specific
