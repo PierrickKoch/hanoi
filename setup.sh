@@ -63,17 +63,16 @@ export PATH=\$PATH:${workspace}/bin
 export PYTHONPATH=\$PYTHONPATH:${workspace}/lib/python3.3/dist-packages
 export PKG_CONFIG_PATH=${workspace}/lib/pkgconfig:\$PKG_CONFIG_PATH
 # Colorize MORSE :-)
-alias morse="morse -c"
+alias morse="env LD_LIBRARY_PATH=${workspace}/lib morse -c"
 EOF
 
 echo "[ -f ${workspace}/.bashrc ] && source ${workspace}/.bashrc" >> ~/.bashrc
 
 source ${workspace}/.bashrc
 
-echo "Install MORSE 1.0 tarball"
-(wget -cq https://github.com/laas/morse/archive/af47579931f01e3a76882752c4ee161eca1c99e2.tar.gz -O morse.tgz && \
-tar zxf morse.tgz && mv morse-* ${workspace}/src/morse && wait $pypid && \
-cd ${workspace}/src/morse && mkdir -p build && cd build && \
+echo "Install MORSE (latest from git master branch)"
+(cd ${workspace}/src && git clone git://github.com/laas/morse.git && \
+wait $pypid && cd ${workspace}/src/morse && mkdir -p build && cd build && \
 cmake -DCMAKE_INSTALL_PREFIX=${workspace} -DPYMORSE_SUPPORT=ON \
 -DPYTHON_EXECUTABLE=${workspace}/bin/python3.3 -DBUILD_ROS_SUPPORT=ON .. && \
 make install) &
